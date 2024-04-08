@@ -66,8 +66,8 @@ public class Base {
                 if (rs.next()) {
                     // Consulta para atualizar o saldo do usuário existente após o saque
                     PreparedStatement pstmtAtualizarSaque = conexao.prepareStatement("UPDATE usuarios SET dinheiro = dinheiro - ? WHERE id = ?");
-                    pstmtAtualizarSaque.setInt(1, idSaque);
-                    pstmtAtualizarSaque.setInt(2, valorSaque);
+                    pstmtAtualizarSaque.setInt(1, valorSaque);
+                    pstmtAtualizarSaque.setInt(2, idSaque);
                     pstmtAtualizarSaque.executeUpdate();
 
                     // Registrar a transação na tabela de transações
