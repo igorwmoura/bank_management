@@ -43,6 +43,28 @@ public class Base {
         }
     }
 }
+
+    public static String mostrarSaldo(int idSaldo, Connection conexao) throws SQLException {
+
+        synchronized (lock) {
+            String sql = "SELECT * FROM usuarios WHERE id = ?";
+            try (PreparedStatement pstmt = conexao.prepareStatement(sql)) {
+                pstmt.setInt(1, idSaldo);
+                ResultSet rs = pstmt.executeQuery();
+
+                if(rs.next()) {
+                    int idUsuario = rs.getInt("id");
+                    int valorSaldo = rs.getInt("dinheiro");
+
+                    System.out.println("Saldo da conta "+ idUsuario +": " + valorSaldo);
+                    return "Saldo da conta "+ idUsuario +": " + valorSaldo;
+                }else {
+                    System.out.println("Usuário não encontrado ou saldo insuficiente para checar o saldo.");
+                    return "Usuário não encontrado ou saldo insuficiente para checar o saldo.";
+            }
+        }
+    }
+    }
     public static void registrarTransacao(int idUsuario, String tipoTransacao, int valorTransacao, Connection conexao) throws SQLException {
         String sql = "INSERT INTO transacoes (id_usuario, tipo_transacao, valor_transacao) VALUES (?, ?, ?)";
         try (PreparedStatement pstmt = conexao.prepareStatement(sql)) {

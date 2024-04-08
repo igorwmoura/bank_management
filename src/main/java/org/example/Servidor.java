@@ -94,6 +94,15 @@ class ServidorThread implements Runnable {
                     outputStream.writeObject(transacoes);
                     outputStream.flush();
                 }
+                case 5 -> {
+                    // Recebe dados do cliente para verificar histórico
+                    // Execute operações de histórico no banco de dados
+                    int idSaldo = inputStream.readInt();
+                    // Envie uma resposta para o cliente
+                    String saldo = Base.mostrarSaldo(idSaldo, conexao);
+                    outputStream.writeObject(saldo);
+                    outputStream.flush();
+                }
                 default -> System.out.println("Opção inválida.");
             }
 
