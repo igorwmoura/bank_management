@@ -22,7 +22,8 @@ public class Cliente {
                 System.out.println("2) Deposito");
                 System.out.println("3) Saque");
                 System.out.println("4) Checar Histórico de Transações");
-                System.out.println("5) Sair");
+                System.out.println("5) Checar Saldo da Conta");
+                System.out.println("6) Sair");
 
                 int opcao = Integer.parseInt(reader.readLine());
 
@@ -90,9 +91,21 @@ public class Cliente {
                             }
                         }
                     }
-                    case 5 -> exit(0);
+                    case 5 -> {
+                        // Para verificar o histórico, solicite o ID do usuário
+                        System.out.println("Digite seu ID: ");
+                        int idSaldo = Integer.parseInt(reader.readLine());
+
+                        // Envie o ID do usuário para o servidor
+                        outputStream.writeInt(idSaldo);
+                        outputStream.flush();
+
+                        String resposta = (String) inputStream.readObject();
+                        System.out.println("Resposta do servidor: " + resposta);
+                    }
+                    case 6 -> exit(0);
                     default -> System.out.println("Opção inválida.");
-            }
+                }
         }catch (IOException | ClassNotFoundException e){
             e.printStackTrace();
     }
